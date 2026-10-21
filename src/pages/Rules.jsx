@@ -55,8 +55,8 @@ export default function Rules() {
         </div>
 
         <div className="space-y-1">
-          <ExampleRow word="STYLO" highlight={3} status="absent" />
-          <p>Le <strong>L</strong> n'est pas dans le mot.</p>
+          <ExampleRow word="STYLO" status="absent" />
+          <p>Le <strong>R</strong> n'est pas dans le mot.</p>
         </div>
 
         <p>Une lettre est aussi grise si vous la proposez plus de fois qu'elle n'apparaît dans le mot.</p>

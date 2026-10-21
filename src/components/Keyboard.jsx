@@ -13,7 +13,13 @@ const STATUS_CLASSES = {
   absent: "bg-gray-500 text-white",
 };
 
-export default function Keyboard({ statuses, onLetter, onEnter, onDelete, disabled }) {
+export default function Keyboard({
+  statuses,
+  onLetter,
+  onEnter,
+  onDelete,
+  disabled,
+}) {
   function handleClick(key) {
     if (key === "ENTER") onEnter();
     else if (key === "DELETE") onDelete();
@@ -21,7 +27,7 @@ export default function Keyboard({ statuses, onLetter, onEnter, onDelete, disabl
   }
 
   return (
-    <div className="mx-auto flex max-w-lg flex-col gap-2">
+    <div className="mx-auto flex max-w-3xl w-full px-2 flex-col gap-2">
       {ROWS.map((row, i) => (
         <div className="flex justify-center gap-1.5" key={i}>
           {row.map((key) => {

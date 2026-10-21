@@ -77,10 +77,23 @@ export default function Tableau() {
           {[0, 1, 2, 3, 4].map((indexCase) => {
             const lettre = motDeLaLigne[indexCase] || "";
 
+            // ! Logique de couleur de cellule
+            let couleurCase = "bg-white border-slate-300 text-black"; // Couleur par défaut (ligne en cours ou vide)
+            if (indexLigne < ligneActive) {
+              // TODO: Remplacer ce test basique par la vraie logique de comparaison avec le mot mystère
+              if (lettre === "A") {
+                couleurCase = "bg-green-500 border-green-500 text-white"; // ? Correct
+              } else if (lettre === "E") {
+                couleurCase = "bg-yellow-500 border-yellow-500 text-white"; // ? correct mais mal placé
+              } else {
+                couleurCase = "bg-gray-500 border-gray-500 text-white"; // ? pas présente
+              }
+            }
+
             return (
               <div
                 key={indexCase}
-                className="w-14 h-14 border-2 border-slate-300 flex items-center justify-center font-bold text-2xl uppercase"
+                className={`w-14 h-14 border-2 border-slate-300 flex items-center justify-center font-bold text-2xl uppercase ${couleurCase}`}
               >
                 {lettre}
               </div>

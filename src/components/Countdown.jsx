@@ -15,6 +15,4 @@ export default function Countdown() {
             Porchain mot dans <strong className="font-mono">{formatCountdown(seconds)}</strong>
         </p>
     )
-
-
 }

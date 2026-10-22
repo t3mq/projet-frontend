@@ -14,6 +14,7 @@ export default function EndScreen({ state, onNewGame }) {
           ? `Bravo, trouvé en ${attempts} essai${attempts > 1 ? "s" : ""} !`
           : "Perdu !"}
       </p>
+      {/* // ! mot du jour */}
       <p>
         Le mot était{" "}
         <a
@@ -34,9 +35,6 @@ export default function EndScreen({ state, onNewGame }) {
         >
           Nouvelle partie
         </button>
-        <Link to="/" className="px-4 py-2 underline">
-          Accueil
-        </Link>
       </div>
     </div>
   );

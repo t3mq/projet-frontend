@@ -4,7 +4,7 @@ import { normalizeWord } from "../logic/normalize.js";
 export function useKeyboard(onKey) {
   useEffect(() => {
     function handleKeyDown(e) {
-      if (e.ctrlKey || e.metaKey || e.altKey) return; // raccourcis du navigateur
+      if (e.ctrlKey || e.metaKey || e.altKey) return; // ? raccourcis du navigateur
 
       if (e.key === "Enter") onKey("ENTER");
       else if (e.key === "Backspace") onKey("DELETE");

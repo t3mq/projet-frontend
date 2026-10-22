@@ -3,30 +3,30 @@ import { useNavigate } from "react-router";
 import { Link } from "react-router";
 
 export default function Home() {
-  const [pseudo, setPseudo] = useState(""); // un useState initialisé vide
-  const naviguer = useNavigate(); // ! Hook pour changer de page
+  const [pseudo, setPseudo] = useState(""); // ? un useState initialisé vide
+  const naviguer = useNavigate(); // ? Hook pour changer de page
 
-  //mettre a jour la variable a chaque lettre tapé
+  // ? mettre a jour la variable a chaque lettre tapé
   const SavePseudo = (e) => {
-    setPseudo(e.target.value); // va contenir le texte tapé
+    setPseudo(e.target.value); // ? va contenir le texte tapé
   };
 
   const validerFormulaire = (evenement) => {
-    evenement.preventDefault(); // pour bloquer le rechargement de la page
+    evenement.preventDefault(); // ? pour bloquer le rechargement de la page
 
-    // pour pas jouer un pseudo vide
+    // ! pour pas jouer un pseudo vide
     if (pseudo.trim() === "") {
       alert("Veuillez entrer un pseudo");
       return;
     }
 
     const PseudoJoueur = {
-      nom: pseudo.trim(), // trim va supp les espaces inutiles (début et à la fin)
+      nom: pseudo.trim(), // ? trim va supp les espaces inutiles (début et à la fin)
     };
 
     // ? FORMATAGE des données
-    const FormatageDonnees = JSON.stringify(PseudoJoueur); // formater la donnée au format json pour le stocké dans le fichier usersData.json
-    localStorage.setItem("joueur", FormatageDonnees); // pour enregistrer dans le NAVIGATEUR
+    const FormatageDonnees = JSON.stringify(PseudoJoueur); //? formater la donnée au format json pour le stocké dans le fichier usersData.json
+    localStorage.setItem("joueur", FormatageDonnees); // ? pour enregistrer dans le NAVIGATEUR
 
     // ---------------TEST---------------------------------
     //  relit ce qui a été stocké
@@ -38,14 +38,14 @@ export default function Home() {
 
     // ----------------------------------------------------
 
-    // ? changer de page
+    // ! changer de page
     naviguer("/partie");
   };
 
   return (
     <>
       <h1 className="">Daily Word guess</h1>
-      <h2>Trouvez le mot mystere avec 6 essais max</h2>
+      <h2>Trouvez le mot mystere avec 6 essais </h2>
       <h2>Entrez votre pseudo</h2>
       <form onSubmit={validerFormulaire} className="flex flex-col gap-5 w-fit">
         <input

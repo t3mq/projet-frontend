@@ -22,25 +22,25 @@ export default function WordGrid({
         const estValidee = indexLigne < guesses.length;
         const estActive = indexLigne === indexLigneActive;
 
-        // ! logique de couleur => calculée par evaluate.js
+        // ! logique de couleur pour le clavier => calculée par evaluate.js
         const couleurs = estValidee
           ? evaluateGuess(motDeLaLigne, solution)
           : [];
 
         return (
           <div
-            // La clé change à chaque refus : React recrée la ligne et le tremblement rejoue.
+            // ! clé modifier à chaque refus => React recrée la ligne et le tremblement rejoue.
             key={estActive ? `active-${rejectCount}` : indexLigne}
             className={`grid grid-cols-5 gap-3 w-fit ${estActive && rejectCount > 0 ? "animate-shake" : ""}`}
           >
             {[0, 1, 2, 3, 4].map((indexCase) => {
               const lettre = motDeLaLigne[indexCase] || "";
 
-              let couleurCase = "bg-white border-slate-300 text-black"; // ligne vide ou en cours
+              let couleurCase = "bg-white border-slate-300 text-black"; // ? ligne vide ou en cours
               if (estValidee) {
                 couleurCase = `${STATUS_CLASSES[couleurs[indexCase]]} animate-flip`;
               } else if (estActive && invalid) {
-                couleurCase = "bg-white border-red-500 text-black"; // mot refusé
+                couleurCase = "bg-white border-red-500 text-black"; // ? mot refusé
               }
 
               return (

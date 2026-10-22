@@ -1,3 +1,4 @@
+// ! Contient la logique de jeu basé sur les fonctions en js
 import { useState, useEffect, useReducer } from "react";
 import Tableau from "../components/WordGrid";
 import Countdown from "../components/Countdown";
@@ -14,6 +15,7 @@ import { useKeyboard } from "../hooks/useKeyboard";
 import WordGrid from "../components/WordGrid";
 import Keyboard from "../components/Keyboard";
 import EndScreen from "../pages/Endscreen";
+import { Link } from "react-router";
 
 export default function Game() {
   const [state, dispatch] = useReducer(gameReducer, null, () =>
@@ -24,10 +26,11 @@ export default function Game() {
   const [rejectCount, setRejectCount] = useState(0); // ? pour jouer /relancer le tremblement
   const [invalid, setInvalid] = useState(false); // ? si ligne en cours refusé
 
+  // ! verifier si le mot est bon ou non
   async function handleSubmit() {
     if (checking || state.status !== "playing") return;
     if (state.current.length !== state.solution.length) {
-      setMessage("Le mot est incomplet.");
+      setMessage("Le mot est incomplet."); // ? si mot < 5 charactères
       return;
     }
 
@@ -36,6 +39,7 @@ export default function Game() {
     try {
       const word = await checkWord(state.current);
       if (word) {
+        // ? si mot n'est pas dans le dictionnaire
         dispatch({ type: "SUBMIT" });
       } else {
         setMessage("Ce mot n'est pas dans le dictionnaire.");
@@ -43,16 +47,18 @@ export default function Game() {
         setRejectCount((count) => count + 1);
       }
     } catch {
+      // ? si impossibilité de joindre le dictionnaire via l'api
       setMessage("Dictionnaire injoignable : mot accepté sans vérification.");
       dispatch({ type: "SUBMIT" });
     } finally {
       setChecking(false);
     }
   }
+  // ! action lorsque l'on tape au clavier
   function handleKey(key) {
     if (checking) return;
     if (key === "ENTER") {
-      handleSubmit();
+      handleSubmit(); // ? on verifie le mot via la fonction ( mot valide/ dans le dictionnaire etc)
       return;
     }
     setInvalid(false);
@@ -60,7 +66,7 @@ export default function Game() {
     if (key === "DELETE") dispatch({ type: "REMOVE_LETTER" });
     else dispatch({ type: "ADD_LETTER", letter: key });
   }
-
+  // ! nouvelle partie
   function handleNewGame() {
     dispatch({ type: "NEW_GAME", word: pickRandomWord(SOLUTIONS) });
     setMessage("");
@@ -69,34 +75,57 @@ export default function Game() {
   }
 
   useKeyboard(handleKey);
+  // ! Return
   return (
-    <main className="mx-auto max-w-lg space-y-6 p-4">
-      <h1 className="text-center text-2xl font-bold">Le Mot Mystère</h1>
+    <>
+      <div>
+        <div>
+          <main className="mx-auto max-w-lg space-y-6 p-4">
+            <h1 className="text-center text-2xl font-bold">Le Mot Mystère</h1>
+            {/* // ! countdown avant prochain mot */}
+            <Countdown />
 
-      <WordGrid
-        guesses={state.guesses}
-        current={state.current}
-        solution={state.solution}
-        maxGuesses={MAX_GUESSES}
-        rejectCount={rejectCount}
-        invalid={invalid}
-      />
+            {/* // ! Grille de lettre */}
+            <WordGrid
+              guesses={state.guesses}
+              current={state.current}
+              solution={state.solution}
+              maxGuesses={MAX_GUESSES}
+              rejectCount={rejectCount}
+              invalid={invalid}
+            />
 
-      <p className="min-h-6 text-center">
-        {checking ? "Vérification du mot..." : message}
-      </p>
+            <p className="min-h-6 text-center">
+              {checking ? "Vérification du mot..." : message}
+            </p>
 
-      {state.status === "playing" ? (
-        <Keyboard
-          statuses={getKeyStatuses(state.guesses, state.solution)}
-          onLetter={(letter) => handleKey(letter)}
-          onDelete={() => handleKey("DELETE")}
-          onEnter={() => handleKey("ENTER")}
-          disabled={checking}
-        />
-      ) : (
-        <EndScreen state={state} onNewGame={handleNewGame} />
-      )}
-    </main>
+            {/* // ! keyboard virtuel */}
+            {state.status === "playing" ? (
+              <Keyboard
+                statuses={getKeyStatuses(state.guesses, state.solution)}
+                onLetter={(letter) => handleKey(letter)}
+                onDelete={() => handleKey("DELETE")}
+                onEnter={() => handleKey("ENTER")}
+                disabled={checking}
+              />
+            ) : (
+              // ! endscreen ( que si condition playing est vraie)
+              <EndScreen state={state} onNewGame={handleNewGame} />
+            )}
+          </main>
+        </div>
+        <div className="flex justify-center mt-4 pb-12">
+          <Link
+            to="/"
+            className=" text-2xl inline-block underline justify-center"
+          >
+            Retour à l'accueil
+          </Link>
+          <br />
+          <br />
+          <br />
+        </div>
+      </div>
+    </>
   );
 }

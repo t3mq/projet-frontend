@@ -1,10 +1,11 @@
 import { normalizeWord } from "./normalize.js";
 
+
 export const MAX_GUESSES = 6;
 
 // Tire un mot au hasard dans la liste des solutions.
 export function pickRandomWord(wordList) {
-  return words[Math.floor(Math.random() * words.length)];
+  return wordList[Math.floor(Math.random() * wordList.length)];
 }
 
 // Crée l'état de départ d'une partie à partir d'un mot avec accents.

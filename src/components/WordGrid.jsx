@@ -1,3 +1,6 @@
+import { evaluateGuess } from "../logic/evaluate.js";
+import { STATUS_CLASSES } from "../logic/color.js";
+
 export default function WordGrid({
   guesses,
   current,

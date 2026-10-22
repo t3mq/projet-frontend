@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router";
+import { Link } from "react-router";
 
 export default function Home() {
   const [pseudo, setPseudo] = useState(""); // un useState initialisé vide
@@ -27,7 +28,6 @@ export default function Home() {
     const FormatageDonnees = JSON.stringify(PseudoJoueur); // formater la donnée au format json pour le stocké dans le fichier usersData.json
     localStorage.setItem("joueur", FormatageDonnees); // pour enregistrer dans le NAVIGATEUR
 
-
     // ---------------TEST---------------------------------
     //  relit ce qui a été stocké
     // const donneesSauvegardees = localStorage.getItem("joueur");
@@ -37,7 +37,7 @@ export default function Home() {
     // alert(`mon pseudo est : ${joueurRecupere.nom}`); // test pour regarder si le pseudo est bien save
 
     // ----------------------------------------------------
-    
+
     // ? changer de page
     naviguer("/partie");
   };
@@ -55,9 +55,17 @@ export default function Home() {
           className="border border-black-600"
           name="PseudoInput"
         />
+        {/*// ? bouton pour jouer */}
         <button type="submit" className="border border-blue-500">
           Jouer
         </button>
+        {/* // ? bouton pour Regles  */}
+        <Link
+          to="/regles"
+          className="border border-slate-500 text-center px-4 py-2"
+        >
+          Règles
+        </Link>
       </form>
     </>
   );

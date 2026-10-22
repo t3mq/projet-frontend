@@ -7,7 +7,7 @@ const ROWS = [
 const LABELS = { ENTER: "Entrée", DELETE: "⌫" };
 
 // Couleur de la touche selon l'état connu de la lettre.
-import { STATUS_CLASSES } from "./color.js";
+import { STATUS_CLASSES } from "../logic/color.js";
 
 export default function Keyboard({
   statuses,

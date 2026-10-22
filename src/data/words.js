@@ -1,3 +1,3 @@
-import words from "./mots-solutions.json";
+import words from "./mots_solutions.json";
 
 export const SOLUTIONS = words;

@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
 import Tableau from "../components/WordGrid";
+import Countdown from "../components/Countdown";
+
 
 
 export default function Game() {
@@ -24,6 +26,7 @@ export default function Game() {
       <div>test</div>
       <div>Votre pseudo est : {pseudo}</div>
       <div>Votre nombre de point est : </div>{" "}      {/* // ! à initialiser plus tard  */}
+      <Countdown/>
       <Tableau/>
     </>
   );

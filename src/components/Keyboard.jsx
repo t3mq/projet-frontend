@@ -7,11 +7,7 @@ const ROWS = [
 const LABELS = { ENTER: "Entrée", DELETE: "⌫" };
 
 // Couleur de la touche selon l'état connu de la lettre.
-const STATUS_CLASSES = {
-  correct: "bg-green-600 text-white",
-  present: "bg-yellow-500 text-white",
-  absent: "bg-gray-500 text-white",
-};
+import { STATUS_CLASSES } from "./color.js";
 
 export default function Keyboard({
   statuses,

@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import Keyboard from "./Keyboard";
+import { evaluateGuess } from "../logic/evaluate";
+import { STATUS_CLASSES } from "../logic/color";
 
 export default function Tableau() {
   const [lignes, setLignes] = useState(["", "", "", "", "", ""]); // pour avoir les 6 lignes vides de départ

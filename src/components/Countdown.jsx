@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { secondsUntilParisMidnight, formatCountdown } from "../logic/time.js";
+import { secondsUntilParisMidnight, formatCountdown } from "../logic/countdown.js";
 
 export default function Countdown() {
     const [seconds, setSeconds] = useState(() => secondsUntilParisMidnight(new Date()));

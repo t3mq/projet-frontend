@@ -74,6 +74,23 @@ export default function Game() {
     setRejectCount(0);
   }
 
+  // ! Partie pseudo 
+  const [pseudo, setPseudo] = useState(""); // pour stocker le pseudo qui provient du local storage
+
+  useEffect(() => {
+    // ? Lire le texte brut enregistré sous la clé "joueur" dans le local storage
+    const texteSauvegarde = localStorage.getItem("joueur");
+
+    // vérifier qu'il y a bien quelque chose
+    if (texteSauvegarde) {
+      //  Reconvertir le texte JSON en véritable objet JS
+      const donnees = JSON.parse(texteSauvegarde);
+
+      // Mettre à jour le state avec le nom venant du local storage
+      setPseudo(donnees.nom);
+    }
+  }, []);
+
   useKeyboard(handleKey);
   // ! Return
   return (
@@ -82,6 +99,7 @@ export default function Game() {
         <div>
           <main className="mx-auto max-w-lg space-y-6 p-4">
             <h1 className="text-center text-2xl font-bold">Le Mot Mystère</h1>
+            <div>Votre pseudo est : {pseudo}</div>
             {/* // ! countdown avant prochain mot */}
             <Countdown />
 

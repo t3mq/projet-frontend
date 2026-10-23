@@ -1,7 +1,8 @@
+import { STATUS_CLASSES } from "../logic/color.js";
 import { Link } from "react-router";
 import { POINTS } from "../logic/scoring.js";
 
-const COLORS = {
+const STATUS_CLASSES = {
   correct: "bg-green-600 text-white border-green-600",
   present: "bg-yellow-500 text-white border-yellow-500",
   absent: "bg-gray-500 text-white border-gray-500",
@@ -20,7 +21,7 @@ function ExampleRow({ word, highlight, status }) {
         <div
           key={i}
           className={`flex h-10 w-10 items-center justify-center border-2 font-bold ${
-            i === highlight ? COLORS[status] : COLORS.empty
+            i === highlight ? STATUS_CLASSES[status] : STATUS_CLASSES.empty
           }`}
         >
           {letter}
@@ -37,8 +38,14 @@ export default function Rules() {
 
       <section className="space-y-2">
         <p>Trouvez le mot mystère de cinq lettres en six essais au maximum.</p>
-        <p>Chaque proposition doit être un vrai mot français. Les accents ne se tapent pas : « école » se joue ECOLE.</p>
-        <p>Après chaque proposition, la couleur des cases indique si vous approchez du mot.</p>
+        <p>
+          Chaque proposition doit être un vrai mot français. Les accents ne se
+          tapent pas : « école » se joue ECOLE.
+        </p>
+        <p>
+          Après chaque proposition, la couleur des cases indique si vous
+          approchez du mot.
+        </p>
       </section>
 
       <section className="space-y-4">
@@ -46,20 +53,29 @@ export default function Rules() {
 
         <div className="space-y-1">
           <ExampleRow word="ARBRE" highlight={0} status="correct" />
-          <p>Le <strong>A</strong> est dans le mot, à la bonne place.</p>
+          <p>
+            Le <strong>A</strong> est dans le mot, à la bonne place.
+          </p>
         </div>
 
         <div className="space-y-1">
           <ExampleRow word="PLUIE" highlight={1} status="present" />
-          <p>Le <strong>L</strong> est dans le mot, mais à une autre place.</p>
+          <p>
+            Le <strong>L</strong> est dans le mot, mais à une autre place.
+          </p>
         </div>
 
         <div className="space-y-1">
           <ExampleRow word="STYLO" status="absent" />
-          <p>Le <strong>R</strong> n'est pas dans le mot.</p>
+          <p>
+            Le <strong>R</strong> n'est pas dans le mot.
+          </p>
         </div>
 
-        <p>Une lettre est aussi grise si vous la proposez plus de fois qu'elle n'apparaît dans le mot.</p>
+        <p>
+          Une lettre est aussi grise si vous la proposez plus de fois qu'elle
+          n'apparaît dans le mot.
+        </p>
       </section>
 
       <section className="space-y-2">

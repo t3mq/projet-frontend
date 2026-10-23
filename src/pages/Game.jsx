@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 // ! Contient la logique de jeu basé sur les fonctions en js
 import { useState, useEffect, useReducer } from "react";
 import Tableau from "../components/WordGrid";
@@ -29,6 +30,31 @@ export default function Game() {
   const [invalid, setInvalid] = useState(false); // : si ligne en cours refusé
 
   // ! verifier si le mot est bon ou non via l'api
+=======
+import { useReducer, useState } from "react";
+import { gameReducer, createGame, pickRandomWord, MAX_GUESSES } from "../logic/gameReducer.js";
+import { getKeyStatuses } from "../logic/keyboard.js";
+import { checkWord } from "../api/wiktionary.js";
+import { SOLUTIONS } from "../data/words.js";
+import { useKeyboard } from "../hooks/useKeyboard.js";
+import WordGrid from "../components/WordGrid.jsx";
+import Keyboard from "../components/Keyboard.jsx";
+import EndScreen from "./Endscreen.jsx";
+
+export default function Game() {
+  // 1. L'état de la partie vient du reducer.
+  const [state, dispatch] = useReducer(gameReducer, null, () =>
+    createGame(pickRandomWord(SOLUTIONS))
+  );
+
+  // 2. Ce qui ne concerne que l'affichage reste en useState.
+  const [checking, setChecking] = useState(false); // vérification Wiktionnaire en cours
+  const [message, setMessage] = useState("");
+  const [rejectCount, setRejectCount] = useState(0); // relance le tremblement
+  const [invalid, setInvalid] = useState(false); // ligne en cours refusée
+
+  // 3. Valider : on vérifie le mot AVANT de dispatcher SUBMIT.
+>>>>>>> Stashed changes
   async function handleSubmit() {
     if (checking || state.status !== "playing") return;
     if (state.current.length !== state.solution.length) {
@@ -56,7 +82,12 @@ export default function Game() {
       setChecking(false);
     }
   }
+<<<<<<< Updated upstream
   // ! action lorsque l'on tape au clavier
+=======
+
+  // 4. Un seul point d'entrée pour toutes les touches (clavier physique et clavier écran).
+>>>>>>> Stashed changes
   function handleKey(key) {
     if (checking) return;
     if (key === "ENTER") {
@@ -95,6 +126,7 @@ export default function Game() {
   }, []);
 
   useKeyboard(handleKey);
+<<<<<<< Updated upstream
   // ! Return
   return (
     <>
@@ -146,5 +178,36 @@ export default function Game() {
         </div>
       </div>
     </>
+=======
+
+  // 5. L'affichage : on passe des données aux composants, ils dessinent.
+  return (
+    <main className="mx-auto max-w-lg space-y-6 p-4">
+      <h1 className="text-center text-2xl font-bold">Le Mot Mystère</h1>
+
+      <WordGrid
+        guesses={state.guesses}
+        current={state.current}
+        solution={state.solution}
+        maxGuesses={MAX_GUESSES}
+        rejectCount={rejectCount}
+        invalid={invalid}
+      />
+
+      <p className="min-h-6 text-center">{checking ? "Vérification du mot..." : message}</p>
+
+      {state.status === "playing" ? (
+        <Keyboard
+          statuses={getKeyStatuses(state.guesses, state.solution)}
+          onLetter={(letter) => handleKey(letter)}
+          onDelete={() => handleKey("DELETE")}
+          onEnter={() => handleKey("ENTER")}
+          disabled={checking}
+        />
+      ) : (
+        <EndScreen state={state} onNewGame={handleNewGame} />
+      )}
+    </main>
+>>>>>>> Stashed changes
   );
 }

@@ -1,1 +1,18 @@
 @import "tailwindcss";
+
+@theme {
+  --animate-flip: flip 0.6s ease both;
+  --animate-shake: shake 0.4s ease;
+
+  @keyframes flip {
+    0% { transform: rotateX(0); background-color: white; color: black; border-color: #d1d5db; }
+    50% { transform: rotateX(90deg); background-color: white; color: black; border-color: #d1d5db; }
+    100% { transform: rotateX(0); }
+  }
+
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    20%, 60% { transform: translateX(-6px); }
+    40%, 80% { transform: translateX(6px); }
+  }
+}

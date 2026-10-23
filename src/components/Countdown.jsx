@@ -12,7 +12,7 @@ export default function Countdown() {
     }, []);
     return (
         <p className="text-center">
-            Porchain mot dans <strong className="font-mono">{formatCountdown(seconds)}</strong>
+            Prochain mot dans <strong className="font-mono">{formatCountdown(seconds)}</strong>
         </p>
     )
 }

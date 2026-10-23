@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { normalizeWord } from "./normalize";
+import { normalizeWord } from "../normalize";
 
 describe("normalizeWord", () => {
     it("retire les accents", () => {

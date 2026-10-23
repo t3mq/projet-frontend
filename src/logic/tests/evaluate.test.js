@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { evaluateGuess, CORRECT as V, PRESENT as J, ABSENT as G } from "./evaluate";
+import { evaluateGuess, CORRECT as V, PRESENT as J, ABSENT as G } from "../evaluate";
 
 describe("evaluateGuess", () => {
     it("mot trouvé : tout vert", () => {

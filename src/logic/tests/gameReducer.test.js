@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { gameReducer, createGame } from "./gameReducer";
+import { gameReducer, createGame } from "../gameReducer";
 
 // Petit utilitaire : tape un mot complet puis valide.
 function play(state, word) {

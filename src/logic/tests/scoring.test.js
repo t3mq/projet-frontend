@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { getPoints } from "./scoring.js";
+import { getPoints } from "../scoring.js";
 
 describe("getPoints", () => {
   it("donne 600 points en un essai", () => {

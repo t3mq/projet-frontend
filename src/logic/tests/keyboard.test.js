@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { getKeyStatuses } from "./keyboard.js";
+import { getKeyStatuses } from "../keyboard.js";
 
 describe("getKeyStatuses", () => {
   it("aucune touche colorée au départ", () => {

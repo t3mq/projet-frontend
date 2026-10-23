@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { secondsUntilParisMidnight, formatCountdown } from "./countdown.js";
+import { secondsUntilParisMidnight, formatCountdown } from "../countdown.js";
 
 describe("secondsUntilParisMidnight", () => {
   it("heure d'été : 21h59 UTC = 23h59 à Paris, il reste 60 s", () => {

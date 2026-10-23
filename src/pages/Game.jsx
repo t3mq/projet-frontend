@@ -18,19 +18,21 @@ import EndScreen from "../pages/Endscreen";
 import { Link } from "react-router";
 
 export default function Game() {
-  const [state, dispatch] = useReducer(gameReducer, null, () =>
-    createGame(pickRandomWord(SOLUTIONS)),
+  const [state, dispatch] = useReducer(
+    gameReducer,
+    null,
+    () => createGame(pickRandomWord(SOLUTIONS)), // : lazy init => pas relancer a chaque fois que la page est rendu de nouveau
   );
-  const [checking, setChecking] = useState(false); // ? vérification Wiktionnaire
+  const [checking, setChecking] = useState(false); // : vérification Wiktionnaire
   const [message, setMessage] = useState("");
-  const [rejectCount, setRejectCount] = useState(0); // ? pour jouer /relancer le tremblement
-  const [invalid, setInvalid] = useState(false); // ? si ligne en cours refusé
+  const [rejectCount, setRejectCount] = useState(0); // : pour jouer /relancer le tremblement
+  const [invalid, setInvalid] = useState(false); // : si ligne en cours refusé
 
-  // ! verifier si le mot est bon ou non
+  // ! verifier si le mot est bon ou non via l'api
   async function handleSubmit() {
     if (checking || state.status !== "playing") return;
     if (state.current.length !== state.solution.length) {
-      setMessage("Le mot est incomplet."); // ? si mot < 5 charactères
+      setMessage("Le mot est incomplet."); // : si mot < 5 charactères
       return;
     }
 
@@ -39,7 +41,7 @@ export default function Game() {
     try {
       const word = await checkWord(state.current);
       if (word) {
-        // ? si mot n'est pas dans le dictionnaire
+        // : si mot n'est pas dans le dictionnaire
         dispatch({ type: "SUBMIT" });
       } else {
         setMessage("Ce mot n'est pas dans le dictionnaire.");
@@ -47,7 +49,7 @@ export default function Game() {
         setRejectCount((count) => count + 1);
       }
     } catch {
-      // ? si impossibilité de joindre le dictionnaire via l'api
+      // : si impossibilité de joindre le dictionnaire via l'api
       setMessage("Dictionnaire injoignable : mot accepté sans vérification.");
       dispatch({ type: "SUBMIT" });
     } finally {
@@ -58,7 +60,7 @@ export default function Game() {
   function handleKey(key) {
     if (checking) return;
     if (key === "ENTER") {
-      handleSubmit(); // ? on verifie le mot via la fonction ( mot valide/ dans le dictionnaire etc)
+      handleSubmit(); // : on verifie le mot via la fonction ( mot valide/ dans le dictionnaire etc)
       return;
     }
     setInvalid(false);
@@ -74,16 +76,17 @@ export default function Game() {
     setRejectCount(0);
   }
 
-  // ! Partie pseudo 
+  // ! Partie pseudo
+
   const [pseudo, setPseudo] = useState(""); // pour stocker le pseudo qui provient du local storage
 
   useEffect(() => {
-    // ? Lire le texte brut enregistré sous la clé "joueur" dans le local storage
+    // : Lire le texte brut enregistré sous la clé "joueur" dans le local storage
     const texteSauvegarde = localStorage.getItem("joueur");
 
     // vérifier qu'il y a bien quelque chose
     if (texteSauvegarde) {
-      //  Reconvertir le texte JSON en véritable objet JS
+      //  Reconvertir le texte JSON en objet JS
       const donnees = JSON.parse(texteSauvegarde);
 
       // Mettre à jour le state avec le nom venant du local storage
@@ -99,10 +102,10 @@ export default function Game() {
         <div>
           <main className="mx-auto max-w-lg space-y-6 p-4">
             <h1 className="text-center text-2xl font-bold">Le Mot Mystère</h1>
+            // ! affichage du pseudo
             <div>Votre pseudo est : {pseudo}</div>
             {/* // ! countdown avant prochain mot */}
             <Countdown />
-
             {/* // ! Grille de lettre */}
             <WordGrid
               guesses={state.guesses}
@@ -112,11 +115,9 @@ export default function Game() {
               rejectCount={rejectCount}
               invalid={invalid}
             />
-
             <p className="min-h-6 text-center">
               {checking ? "Vérification du mot..." : message}
             </p>
-
             {/* // ! keyboard virtuel */}
             {state.status === "playing" ? (
               <Keyboard

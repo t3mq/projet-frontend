@@ -22,7 +22,7 @@ export default function WordGrid({
         const estValidee = indexLigne < guesses.length;
         const estActive = indexLigne === indexLigneActive;
 
-        // ! logique de couleur pour le clavier => calculée par evaluate.js
+        // ! logique de couleur pour le clavier => calculée par evaluate.js ( fonction evaluateGuess)
         const couleurs = estValidee
           ? evaluateGuess(motDeLaLigne, solution)
           : [];

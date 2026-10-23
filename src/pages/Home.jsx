@@ -25,8 +25,8 @@ export default function Home() {
     };
 
     // ? FORMATAGE des données
-    const FormatageDonnees = JSON.stringify(PseudoJoueur); //? formater la donnée au format json pour le stocké dans le fichier usersData.json
-    localStorage.setItem("joueur", FormatageDonnees); // ? pour enregistrer dans le NAVIGATEUR
+    const FormatageDonnees = JSON.stringify(PseudoJoueur); //? formater la donnée au format json pour le stocké 
+    localStorage.setItem("joueur", FormatageDonnees); // ? pour enregistrer dans le NAVIGATEUR avec la clé joueur
 
     // ---------------TEST---------------------------------
     //  relit ce qui a été stocké
@@ -34,7 +34,7 @@ export default function Home() {
     // On transforme le texte JSON en objet JS
     // const joueurRecupere = JSON.parse(donneesSauvegardees);
 
-    // alert(`mon pseudo est : ${joueurRecupere.nom}`); // test pour regarder si le pseudo est bien save
+    // alert(`le speudo est : ${joueurRecupere.nom}`); // test pour regarder si le pseudo est bien save
 
     // ----------------------------------------------------
 

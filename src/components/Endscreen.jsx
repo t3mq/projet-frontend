@@ -1,11 +1,10 @@
-import { Link } from "react-router";
-import { getPoints } from "../logic/scoring.js";
 import { wiktionaryUrl } from "../api/wiktionary.js";
+import Countdown from "./Countdown.jsx";
 
-export default function EndScreen({ state, onNewGame }) {
+// Affichage seulement : les points et le texte à partager sont calculés par la page Game.
+export default function EndScreen({ state, points, mode, onNewGame, onShare, shareMessage }) {
   const won = state.status === "won";
   const attempts = state.guesses.length;
-  const points = getPoints(state.status, attempts);
 
   return (
     <div className="space-y-3 text-center">
@@ -14,7 +13,6 @@ export default function EndScreen({ state, onNewGame }) {
           ? `Bravo, trouvé en ${attempts} essai${attempts > 1 ? "s" : ""} !`
           : "Perdu !"}
       </p>
-      {/* // ! mot du jour */}
       <p>
         Le mot était{" "}
         <a
@@ -27,15 +25,31 @@ export default function EndScreen({ state, onNewGame }) {
         </a>
       </p>
       <p>{points} points</p>
-      <div className="flex justify-center gap-4">
-        <button
-          type="button"
-          onClick={onNewGame}
-          className="rounded bg-green-600 px-4 py-2 font-bold text-white"
-        >
-          Nouvelle partie
-        </button>
-      </div>
+
+      {mode === "jour" ? (
+        // Mot du jour : pas de nouvelle partie, on partage et on attend le prochain mot.
+        <>
+          <button
+            type="button"
+            onClick={onShare}
+            className="rounded bg-green-600 px-4 py-2 font-bold text-white"
+          >
+            Partager
+          </button>
+          <p className="min-h-6">{shareMessage}</p>
+          <Countdown />
+        </>
+      ) : (
+        <div className="flex justify-center gap-4">
+          <button
+            type="button"
+            onClick={onNewGame}
+            className="rounded bg-green-600 px-4 py-2 font-bold text-white"
+          >
+            Nouvelle partie
+          </button>
+        </div>
+      )}
     </div>
   );
 }

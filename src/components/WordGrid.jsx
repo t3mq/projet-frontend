@@ -9,15 +9,23 @@ export default function WordGrid({
   rejectCount,
   invalid,
 }) {
-  // On reconstruit les 6 lignes : les validées, puis celle en cours, puis les vides.
+  // On reconstruit toutes les lignes (maxGuesses) : les validées, puis celle en cours, puis les vides.
   const lignes = [...guesses];
   if (lignes.length < maxGuesses) lignes.push(current);
   while (lignes.length < maxGuesses) lignes.push("");
 
   const indexLigneActive = guesses.length;
 
+  // Une case par lettre du mot : 5, 6 ou 7 colonnes.
+  const indexCases = Array.from({ length: solution.length }, (_, i) => i);
+
+  // Cases plus petites pour les mots longs : 7 cases doivent tenir sur un écran de téléphone.
+  let tailleCase = "w-14 h-14 text-2xl";
+  if (solution.length === 6) tailleCase = "w-12 h-12 text-2xl";
+  if (solution.length >= 7) tailleCase = "w-10 h-10 text-xl";
+
   return (
-    <div className="flex flex-col gap-3 items-center mt-6">
+    <div className="flex flex-col gap-2 items-center mt-6">
       {lignes.map((motDeLaLigne, indexLigne) => {
         const estValidee = indexLigne < guesses.length;
         const estActive = indexLigne === indexLigneActive;
@@ -31,9 +39,9 @@ export default function WordGrid({
           <div
             // ! clé modifier à chaque refus => React recrée la ligne et le tremblement rejoue.
             key={estActive ? `active-${rejectCount}` : indexLigne}
-            className={`grid grid-cols-5 gap-3 w-fit ${estActive && rejectCount > 0 ? "animate-shake" : ""}`}
+            className={`flex gap-2 w-fit ${estActive && rejectCount > 0 ? "animate-shake" : ""}`}
           >
-            {[0, 1, 2, 3, 4].map((indexCase) => {
+            {indexCases.map((indexCase) => {
               const lettre = motDeLaLigne[indexCase] || "";
 
               let couleurCase = "bg-white border-slate-300 text-black"; // ? ligne vide ou en cours
@@ -46,7 +54,7 @@ export default function WordGrid({
               return (
                 <div
                   key={indexCase}
-                  className={`w-14 h-14 border-2 flex items-center justify-center font-bold text-2xl uppercase ${couleurCase}`}
+                  className={`${tailleCase} border-2 flex items-center justify-center font-bold uppercase ${couleurCase}`}
                   // ? chaque case se retourne 300 ms après la précédente
                   style={
                     estValidee

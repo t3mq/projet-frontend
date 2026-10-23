@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { getTopScores, getDailyRanking } from "./scores.js";
+import { getTopScores, getDailyRanking } from "../scores.js";
 
 function game(points, date, extra = {}) {
   return { pseudo: "A", points, date, ...extra };

@@ -1,5 +1,7 @@
 import { Link } from "react-router";
-import { POINTS } from "../logic/scoring.js";
+import { POINTS, LENGTH_MULTIPLIERS, HARD_MULTIPLIER } from "../logic/scoring.js";
+import { maxGuessesFor } from "../logic/gameReducer.js";
+import { LENGTHS } from "../data/words.js";
 import { evaluateGuess } from "../logic/evaluate.js";
 import { STATUS_CLASSES } from "../logic/color.js";
 
@@ -35,7 +37,15 @@ export default function Rules() {
       <h1 className="text-2xl font-bold">Règles du jeu</h1>
 
       <section className="space-y-2">
-        <p>Trouvez le mot mystère de cinq lettres en six essais au maximum.</p>
+        <p>Trouvez le mot mystère en un nombre limité d'essais : un essai de plus que le nombre de lettres.</p>
+        <ul className="list-disc pl-6">
+          {LENGTHS.map((length) => (
+            <li key={length}>
+              {length} lettres : {maxGuessesFor(length)} essais
+            </li>
+          ))}
+        </ul>
+        <p>Le mot du jour fait toujours 5 lettres, se joue une seule fois par jour et change à minuit (heure de Paris).</p>
         <p>Chaque proposition doit être un vrai mot français. Les accents ne se tapent pas : « école » se joue ECOLE.</p>
         <p>Après chaque proposition, chaque case change de couleur :</p>
         <ul className="list-disc pl-6">
@@ -70,7 +80,18 @@ export default function Rules() {
       </section>
 
       <section className="space-y-2">
+        <h2 className="text-xl font-bold">Mode difficile</h2>
+        <p>À activer dans les réglages de la partie libre. Chaque indice révélé doit être réutilisé :</p>
+        <ul className="list-disc pl-6">
+          <li>une lettre verte doit rester à la même place ;</li>
+          <li>une lettre jaune doit être reprise dans les propositions suivantes.</li>
+        </ul>
+        <p>Une proposition qui ne respecte pas ces règles est refusée et ne compte pas comme un essai.</p>
+      </section>
+
+      <section className="space-y-2">
         <h2 className="text-xl font-bold">Points</h2>
+        <p>Barème de base pour un mot de 5 lettres :</p>
         <table className="w-full border-collapse">
           <tbody>
             {POINTS_ROWS.map(([label, points]) => (
@@ -81,6 +102,18 @@ export default function Rules() {
             ))}
           </tbody>
         </table>
+        <p>
+          Pour 6 et 7 lettres, on compte 100 points par essai restant, plus 100 (le dernier essai
+          rapporte toujours 100). On multiplie ensuite :
+        </p>
+        <ul className="list-disc pl-6">
+          {LENGTHS.map((length) => (
+            <li key={length}>
+              {length} lettres : × {String(LENGTH_MULTIPLIERS[length]).replace(".", ",")}
+            </li>
+          ))}
+          <li>mode difficile : × {String(HARD_MULTIPLIER).replace(".", ",")} en plus</li>
+        </ul>
       </section>
 
       <Link to="/" className="inline-block underline">

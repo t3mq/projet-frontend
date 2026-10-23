@@ -1,7 +1,6 @@
 <<<<<<< Updated upstream
 // ! Contient la logique de jeu basé sur les fonctions en js
 import { useState, useEffect, useReducer } from "react";
-import Tableau from "../components/WordGrid";
 import Countdown from "../components/Countdown";
 import {
   gameReducer,
@@ -15,7 +14,7 @@ import { SOLUTIONS } from "../data/words";
 import { useKeyboard } from "../hooks/useKeyboard";
 import WordGrid from "../components/WordGrid";
 import Keyboard from "../components/Keyboard";
-import EndScreen from "../pages/Endscreen";
+import EndScreen from "../components/Endscreen";
 import { Link } from "react-router";
 
 export default function Game() {
